@@ -7,7 +7,6 @@ import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import * as useTeams from "./useTeams";
 import * as microsoftTeams from "@microsoft/teams-js";
-import { Flex, Header, Provider } from "@fluentui/react-northstar";
 
 describe("useTeams", () => {
     let spyCheckInTeams: jest.SpyInstance;
@@ -257,7 +256,7 @@ describe("useTeams", () => {
 
     it("Should call useEffect and render Fluent UI components", async () => {
         const HooksTab = () => {
-            const [{ inTeams, theme }] = useTeams.useTeams({});
+            const [{ inTeams }] = useTeams.useTeams({});
             const [message, setMessage] = React.useState("Loading...");
 
             React.useEffect(() => {
@@ -271,13 +270,7 @@ describe("useTeams", () => {
             }, [inTeams]);
 
             return (
-                <Provider theme={theme}>
-                    <Flex fill={true}>
-                        <Flex.Item>
-                            <Header content={message} />
-                        </Flex.Item>
-                    </Flex>
-                </Provider>
+                <div>{message}</div>
             );
         };
 

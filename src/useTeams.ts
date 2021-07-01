@@ -5,7 +5,6 @@
 import { useEffect, useState } from "react";
 import { unstable_batchedUpdates as batchedUpdates } from "react-dom";
 import * as microsoftTeams from "@microsoft/teams-js";
-import { teamsDarkTheme, teamsHighContrastTheme, teamsTheme, ThemePrepared } from "@fluentui/react-northstar";
 
 export const checkInTeams = (): boolean => {
     // eslint-disable-next-line dot-notation
@@ -52,7 +51,6 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
     {
         inTeams?: boolean,
         fullScreen?: boolean,
-        theme: ThemePrepared,
         themeString: string,
         context?: microsoftTeams.Context
     }, {
@@ -60,24 +58,12 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
     }] {
     const [inTeams, setInTeams] = useState<boolean | undefined>(undefined);
     const [fullScreen, setFullScreen] = useState<boolean | undefined>(undefined);
-    const [theme, setTheme] = useState<ThemePrepared>(teamsTheme);
     const [themeString, setThemeString] = useState<string>("default");
     const [initialTheme] = useState<string | undefined>((options && options.initialTheme) ? options.initialTheme : getQueryVariable("theme"));
     const [context, setContext] = useState<microsoftTeams.Context>();
 
     const themeChangeHandler = (theme: string | undefined) => {
         setThemeString(theme || "default");
-        switch (theme) {
-            case "dark":
-                setTheme(teamsDarkTheme);
-                break;
-            case "contrast":
-                setTheme(teamsHighContrastTheme);
-                break;
-            case "default":
-            default:
-                setTheme(teamsTheme);
-        }
     };
 
     const overrideThemeHandler = options?.setThemeHandler ? options.setThemeHandler : themeChangeHandler;
@@ -110,5 +96,5 @@ export function useTeams(options?: { initialTheme?: string, setThemeHandler?: (t
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return [{ inTeams, fullScreen, theme, context, themeString }, { setTheme: overrideThemeHandler }];
+    return [{ inTeams, fullScreen, context, themeString }, { setTheme: overrideThemeHandler }];
 }

@@ -6,7 +6,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/wictorwilen/msteams-react-base-component.svg)](https://github.com/wictorwilen/msteams-react-base-component/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/wictorwilen/msteams-react-base-component.svg)](https://github.com/wictorwilen/msteams-react-base-component/issues?q=is%3Aissue+is%3Aclosed)
 
-This is a React hook based on the Microsoft Teams JavaScript SDK and the Fluent UI components, which is used when generating Microsoft Teams Apps using the [Microsoft Teams Yeoman Generator](https://aka.ms/yoteams).
+This is a React hook based on the Microsoft Teams JavaScript SDK and the Fluent UI components, which is used when generating Microsoft Teams Apps using the [Microsoft Teams Yeoman Generator](https://aka.ms/yoteams). This fork for Accord Cooperative excludes the Fluent UI React Northstar dependency.
 
  | @master | @preview |
  :--------:|:---------:
@@ -40,7 +40,6 @@ The `useTeams` hook can take an *optional* object argument:
 | `inTeams` | boolean? | `true` if hosted in Teams and `false` for outside of Microsoft Teams |
 | `fullScreen` | boolean? | `true` if the Tab is in full-screen, otherwise `false` |
 | `themeString` | string | The value of `default`, `dark` or `contrast` |
-| `theme` | ThemePrepared | The Fluent UI Theme object for the current theme |
 | `context` | `microsoftTeams.Context?` | `undefined` while the Tab is loading or if not hosted in Teams, set to a value once the Tab is initialized and context available |
 
 ### Available methods
@@ -54,9 +53,7 @@ The `useTeams` hook can take an *optional* object argument:
 Example of usage:
 
 ```  TypeScript
-import * as React from "react";
-import { Provider, Flex, Header } from "@fluentui/react-northstar";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useTeams } from "msteams-react-base-component";
 
 /**
@@ -77,13 +74,7 @@ export const HooksTab = () => {
     }, [inTeams]);
 
     return (
-        <Provider theme={theme}>
-            <Flex fill={true}>
-                <Flex.Item>
-                    <Header content={message} />
-                </Flex.Item>
-            </Flex>
-        </Provider>
+        <div>{message}</div>
     );
 };
 ```
